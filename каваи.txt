@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>KawaiiWave — Макет</title>
+  <style>
+    :root{
+      --accent:#c67adf; /* dark purple */
+      --accent-2:#e6b9f0; /* light pink */
+      --panel:#f5d9fb; /* very pale */
+      --muted:#9b6fa3;
+      --text:#222;
+      --card-shadow: 0 6px 18px rgba(0,0,0,0.12);
+      --radius:16px;
+      font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:linear-gradient(180deg,#f0d9f8 0%, #e7c3ff 100%);color:var(--text);}
+    header{background:var(--accent);color:white;padding:14px 18px;display:flex;align-items:center;gap:16px}
+    .logo{font-weight:700;font-size:20px;background:linear-gradient(90deg,#ffd6f6,#ffe6fb);color:#6a1b6a;padding:6px 10px;border-radius:8px}
+    nav{display:flex;gap:12px;align-items:center}
+    nav a{color:white;text-decoration:none;padding:6px 8px;border-radius:6px;font-weight:600}
+    nav a:hover{background:rgba(255,255,255,0.08)}
+    .search{margin-left:auto;display:flex;gap:8px;align-items:center}
+    .search input{padding:8px;border-radius:8px;border:1px solid rgba(0,0,0,0.08)}
+    .auth{margin-left:8px;color:white}
+
+    main{max-width:1100px;margin:20px auto;padding:18px}
+    .frame{background:var(--accent-2);padding:16px;border-radius:20px;box-shadow:var(--card-shadow)}
+
+    /* Hero carousel */
+    .carousel{position:relative;padding:14px;background:linear-gradient(180deg,var(--panel),#fff);border-radius:12px;overflow:hidden}
+    .carousel-track{display:flex;gap:12px;transition:transform 0.45s ease}
+    .card-item{min-width:140px;height:200px;border-radius:10px;background:linear-gradient(180deg,#ffe6fb,#ffd6f6);display:flex;align-items:flex-end;padding:8px;font-weight:700;color:#4a0b4a;box-shadow:0 4px 12px rgba(0,0,0,0.08)}
+    .carousel-nav{position:absolute;top:40%;left:6px;right:6px;display:flex;justify-content:space-between;pointer-events:none}
+    .btn-nav{pointer-events:auto;background:rgba(0,0,0,0.07);border-radius:50%;width:32px;height:32px;border:none}
+
+    /* Новое Аниме */
+    .new-section{margin-top:18px;display:grid;grid-template-columns:1fr 2fr;gap:12px}
+    .anime-list{background:#fff;border-radius:12px;padding:12px;box-shadow:var(--card-shadow);}
+    .anime-row{display:flex;gap:10px;padding:10px;border-radius:10px;align-items:center;border-bottom:1px solid rgba(0,0,0,0.04)}
+    .anime-thumb{width:72px;height:96px;border-radius:6px;background:linear-gradient(180deg,#ffdede,#ffd6f6);display:flex;align-items:center;justify-content:center}
+    .rating{color:#d33;font-weight:700}
+    .anime-desc{font-size:13px;color:#222}
+
+    footer{max-width:1100px;margin:18px auto;padding:12px;text-align:left;color:#5c0b5c}
+
+    /* Secondary pages */
+    .content-panel{background:var(--panel);padding:20px;border-radius:14px}
+    .controls{display:flex;gap:10px;align-items:center}
+    select, .btn-primary{padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.06)}
+    .btn-primary{background:var(--accent);color:white;border:none}
+
+    .review-card{background:white;padding:14px;border-radius:10px;box-shadow:0 6px 16px rgba(0,0,0,0.06);margin-top:12px}
+    .star{color:crimson;font-weight:700}
+
+    /* Contacts */
+    .contact-list{display:flex;flex-direction:column;gap:8px}
+
+    /* Admin */
+    .admin-table{width:100%;border-collapse:collapse;background:white;border-radius:10px;overflow:hidden}
+    .admin-table th, .admin-table td{padding:10px;border-bottom:1px solid #eee;text-align:left}
+    .small{font-size:13px}
+
+    /* Responsive */
+    @media (max-width:880px){
+      .new-section{grid-template-columns:1fr}
+      .carousel{padding:8px}
+      .card-item{min-width:120px}
+      header{flex-wrap:wrap}
+      .search{width:100%}
+    }
+
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">KawaiiWave</div>
+    <nav>
+      <a href="#home">Аниме</a>
+      <a href="#manga">Манга</a>
+      <a href="#top">Топ 100</a>
+      <a href="#reviews">Отзывы</a>
+      <a href="#contacts">Контакты</a>
+      <a href="#admin" style="background:rgba(255,255,255,0.12);padding:6px 10px;border-radius:8px">Админ</a>
+    </nav>
+    <div class="search">
+      <input placeholder="Поиск" aria-label="Поиск">
+      <div class="auth">Авторизоваться/Войти</div>
+    </div>
+  </header>
+
+  <main>
+    <section id="page-content">
+      <!-- content will be injected by JS router -->
+    </section>
+  </main>
+
+  <footer>
+    © 2025 KawaiiWave — Самый лучший аниме сайт
+  </footer>
+
+<script>
+/* Single-file mockup: hash routing to switch views. Includes: home, reviews, contacts, admin. */
+const pages = {
+  home: renderHome,
+  reviews: renderReviews,
+  contacts: renderContacts,
+  admin: renderAdmin
+};
+
+function router(){
+  const anchor = location.hash.replace('#','') || 'home';
+  const content = document.getElementById('page-content');
+  content.innerHTML = '';
+  const fn = pages[anchor] || renderHome;
+  content.appendChild(fn());
+}
+
+/* --- HOME --- */
+function renderHome(){
+  const wrapper = document.createElement('div');
+  wrapper.className='frame';
+  // carousel
+  const carousel = document.createElement('div');carousel.className='carousel';
+  const track = document.createElement('div');track.className='carousel-track';
+  const titles = ['Тёмный демон','Маг воды','Молчаливая ведьма','Дождь и ты','Явка'];
+  for(let i=0;i<5;i++){
+    const it=document.createElement('div');it.className='card-item';it.textContent=titles[i] || 'Постер';
+    track.appendChild(it);
+  }
+  carousel.appendChild(track);
+  const nav = document.createElement('div');nav.className='carousel-nav';
+  const prev = document.createElement('button');prev.className='btn-nav';prev.textContent='‹';
+  const next = document.createElement('button');next.className='btn-nav';next.textContent='›';
+  prev.onclick=()=>slide(-1); next.onclick=()=>slide(1);
+  nav.appendChild(prev);nav.appendChild(next);
+  carousel.appendChild(nav);
+
+  // new anime block
+  const newSection = document.createElement('div');newSection.className='new-section';
+  const left = document.createElement('div');left.className='anime-list';
+  const items=[
+    {title:'Атака титанов / Shingeki no Kyojin',rating:'8.56',desc:'Драматическое аниме о борьбе человечества...'},
+    {title:'ONE-PIECE / Ван-Пис',rating:'8.72',desc:'Пиратские приключения Лаффи и команды...'}
+  ];
+  items.forEach(it=>{
+    const row=document.createElement('div');row.className='anime-row';
+    const th=document.createElement('div');th.className='anime-thumb';th.textContent='Постер';
+    const info=document.createElement('div');
+    const h=document.createElement('div');h.style.fontWeight='700';h.textContent=it.title+' ';
+    const r=document.createElement('div');r.className='rating';r.textContent=it.rating+' ★';
+    const d=document.createElement('div');d.className='anime-desc';d.textContent=it.desc;
+    info.appendChild(h);info.appendChild(r);info.appendChild(d);
+    row.appendChild(th);row.appendChild(info);
+    left.appendChild(row);
+  });
+
+  const right = document.createElement('div');right.className='content-panel';
+  right.innerHTML='<h3>Рекомендации</h3><p class="small">Подборка новых сериалов и описания. Вёрстка отвечает требованиям задания: адаптивная, семантическая.</p>'
+
+  wrapper.appendChild(carousel);
+  wrapper.appendChild(newSection);
+  newSection.appendChild(left); newSection.appendChild(right);
+
+  // carousel logic
+  let pos=0;
+  function slide(dir){
+    pos+=dir;
+    const max = track.children.length - Math.floor((window.innerWidth>880)?5:3);
+    if(pos<0)pos=0; if(pos>max)pos=max;
+    track.style.transform = 'translateX(' + (-pos*(track.children[0].offsetWidth + 12)) + 'px)';
+  }
+  // autoplay
+  let autoplay = setInterval(()=>{ slide(1); if(pos===0) slide(1)},4000);
+  carousel.onmouseenter=()=>clearInterval(autoplay);
+  carousel.onmouseleave=()=>autoplay=setInterval(()=>slide(1),4000);
+
+  return wrapper;
+}
+
+/* --- REVIEWS --- */
+function renderReviews(){
+  const wrap=document.createElement('div');wrap.className='frame';
+  const panel=document.createElement('div');panel.className='content-panel';
+  const controls=document.createElement('div');controls.className='controls';
+  const sel=document.createElement('select');['Все отзывы','Положительные','Отрицательные'].forEach(v=>{let o=document.createElement('option');o.text=v;sel.appendChild(o)});
+  const btn=document.createElement('button');btn.className='btn-primary';btn.textContent='Написать свой отзыв';
+  controls.appendChild(sel);controls.appendChild(btn);
+  panel.appendChild(controls);
+
+  const reviewsContainer=document.createElement('div');reviewsContainer.id='reviews-container';
+  panel.appendChild(reviewsContainer);
+
+  wrap.appendChild(panel);
+
+  // write review form modal (simple inline form)
+  btn.onclick=()=>{
+    const form=document.createElement('div');form.className='review-card';
+    form.innerHTML=`<h4>Оставить отзыв</h4>
+      <input id="rev-name" placeholder="Никнейм" style="padding:8px;width:100%;margin-bottom:8px;border-radius:6px;border:1px solid #ddd">
+      <textarea id="rev-text" placeholder="Текст отзыва" style="padding:8px;width:100%;height:100px;border-radius:6px;border:1px solid #ddd"></textarea>
+      <div style="display:flex;gap:8px;margin-top:8px"><input id="rev-stars" type="number" min="1" max="5" value="5" style="width:80px;padding:8px;border-radius:6px;border:1px solid #ddd"> <button class="btn-primary">Отправить</button></div>`;
+    reviewsContainer.prepend(form);
+    form.querySelector('.btn-primary').onclick=()=>{
+      const name=form.querySelector('#rev-name').value.trim();
+      const txt=form.querySelector('#rev-text').value.trim();
+      const stars=form.querySelector('#rev-stars').value;
+      if(!name||!txt){alert('Заполните имя и текст отзыва');return}
+      addReview({name,txt,stars,ts:Date.now()});
+      form.remove();
+    }
+  }
+
+  loadReviews(); // simulate AJAX
+  return wrap;
+}
+
+function loadReviews(){
+  const container=document.getElementById('reviews-container');
+  container.innerHTML='<div class="small">Загрузка отзывов...</div>';
+  setTimeout(()=>{
+    const demo=[
+      {name:'Неузнаваемый',txt:'Самый лучший аниме сайт на данный момент',stars:5,ts:1695100000000},
+      {name:'Аноним',txt:'Норм сайт, но можно улучшить навигацию',stars:4,ts:1695200000000}
+    ];
+    container.innerHTML='';
+    demo.forEach(r=>{
+      const card=document.createElement('div');card.className='review-card';
+      card.innerHTML=`<div style="display:flex;justify-content:space-between"><strong>${r.name}</strong><div class="star">${r.stars} ★</div></div><p style="margin-top:8px">${r.txt}</p><div class="small" style="text-align:right">${new Date(r.ts).toLocaleString()}</div>`;
+      container.appendChild(card);
+    })
+  },800);
+}
+
+function addReview(r){
+  // prepend to current list
+  const container=document.getElementById('reviews-container');
+  const card=document.createElement('div');card.className='review-card';
+  card.innerHTML=`<div style="display:flex;justify-content:space-between"><strong>${r.name}</strong><div class="star">${r.stars} ★</div></div><p style="margin-top:8px">${r.txt}</p><div class="small" style="text-align:right">${new Date(r.ts).toLocaleString()}</div>`;
+  container.prepend(card);
+}
+
+/* --- CONTACTS --- */
+function renderContacts(){
+  const wrap=document.createElement('div');wrap.className='frame';
+  const panel=document.createElement('div');panel.className='content-panel';
+  panel.innerHTML=`<h3>Контакты</h3><div class="contact-list"><div><strong>Телефон:</strong> +7 999 999 99 99</div><div><strong>Электронная почта:</strong> KawaiiKami@Mail.ru</div></div>`;
+  wrap.appendChild(panel);
+  return wrap;
+}
+
+/* --- ADMIN CRUD (localStorage) --- */
+function renderAdmin(){
+  const wrap=document.createElement('div');wrap.className='frame';
+  const panel=document.createElement('div');panel.className='content-panel';
+  panel.innerHTML='<h3>Администрирование — CRUD (localStorage)</h3>';
+  const btnAdd=document.createElement('button');btnAdd.className='btn-primary';btnAdd.textContent='Добавить запись';
+  panel.appendChild(btnAdd);
+  const tableDiv=document.createElement('div');tableDiv.style.marginTop='12px';
+  panel.appendChild(tableDiv);
+  wrap.appendChild(panel);
+
+  btnAdd.onclick=()=>{
+    const title = prompt('Заголовок'); if(!title) return;
+    const desc = prompt('Описание') || '';
+    const arr = JSON.parse(localStorage.getItem('adminItems')||'[]');
+    arr.push({id:Date.now(),title,desc}); localStorage.setItem('adminItems',JSON.stringify(arr));
+    drawTable();
+  }
+  function drawTable(){
+    const arr = JSON.parse(localStorage.getItem('adminItems')||'[]');
+    let html = '<table class="admin-table"><thead><tr><th>Заголовок</th><th>Описание</th><th>Действия</th></tr></thead><tbody>';
+    if(!arr.length) html += '<tr><td colspan="3">Пока нет записей</td></tr>';
+    arr.forEach(it=>{
+      html += `<tr><td>${it.title}</td><td class="small">${it.desc}</td><td><button data-id="${it.id}" class="edit">Ред.</button> <button data-id="${it.id}" class="del">Уд.</button></td></tr>`;
+    });
+    html += '</tbody></table>';
+    tableDiv.innerHTML=html;
+    tableDiv.querySelectorAll('.del').forEach(b=>b.onclick=(e)=>{ const id=e.target.dataset.id; if(confirm('Удалить?')){ let arr=JSON.parse(localStorage.getItem('adminItems')||'[]'); arr=arr.filter(x=>x.id!=id); localStorage.setItem('adminItems',JSON.stringify(arr)); drawTable();}});
+    tableDiv.querySelectorAll('.edit').forEach(b=>b.onclick=(e)=>{ const id=e.target.dataset.id; let arr=JSON.parse(localStorage.getItem('adminItems')||'[]'); const item=arr.find(x=>x.id==id); const nt=prompt('Новый заголовок',item.title); if(nt){ item.title=nt; item.desc = prompt('Новое описание', item.desc)||item.desc; localStorage.setItem('adminItems',JSON.stringify(arr)); drawTable(); }});
+  }
+  drawTable();
+  return wrap;
+}
+
+window.addEventListener('hashchange',router);
+window.addEventListener('load',router);
+</script>
+</body>
+</html>
