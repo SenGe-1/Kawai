@@ -29,14 +29,14 @@
     main{max-width:1100px;margin:20px auto;padding:18px}
     .frame{background:var(--accent-2);padding:16px;border-radius:20px;box-shadow:var(--card-shadow)}
 
-    /* Hero carousel */
+   
     .carousel{position:relative;padding:14px;background:linear-gradient(180deg,var(--panel),#fff);border-radius:12px;overflow:hidden}
     .carousel-track{display:flex;gap:12px;transition:transform 0.45s ease}
     .card-item{min-width:140px;height:200px;border-radius:10px;background:linear-gradient(180deg,#ffe6fb,#ffd6f6);display:flex;align-items:flex-end;padding:8px;font-weight:700;color:#4a0b4a;box-shadow:0 4px 12px rgba(0,0,0,0.08)}
     .carousel-nav{position:absolute;top:40%;left:6px;right:6px;display:flex;justify-content:space-between;pointer-events:none}
     .btn-nav{pointer-events:auto;background:rgba(0,0,0,0.07);border-radius:50%;width:32px;height:32px;border:none}
 
-    /* Новое Аниме */
+ 
     .new-section{margin-top:18px;display:grid;grid-template-columns:1fr 2fr;gap:12px}
     .anime-list{background:#fff;border-radius:12px;padding:12px;box-shadow:var(--card-shadow);}
     .anime-row{display:flex;gap:10px;padding:10px;border-radius:10px;align-items:center;border-bottom:1px solid rgba(0,0,0,0.04)}
@@ -46,7 +46,7 @@
 
     footer{max-width:1100px;margin:18px auto;padding:12px;text-align:left;color:#5c0b5c}
 
-    /* Secondary pages */
+  
     .content-panel{background:var(--panel);padding:20px;border-radius:14px}
     .controls{display:flex;gap:10px;align-items:center}
     select, .btn-primary{padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.06)}
@@ -55,15 +55,15 @@
     .review-card{background:white;padding:14px;border-radius:10px;box-shadow:0 6px 16px rgba(0,0,0,0.06);margin-top:12px}
     .star{color:crimson;font-weight:700}
 
-    /* Contacts */
+ 
     .contact-list{display:flex;flex-direction:column;gap:8px}
 
-    /* Admin */
+ 
     .admin-table{width:100%;border-collapse:collapse;background:white;border-radius:10px;overflow:hidden}
     .admin-table th, .admin-table td{padding:10px;border-bottom:1px solid #eee;text-align:left}
     .small{font-size:13px}
 
-    /* Responsive */
+
     @media (max-width:880px){
       .new-section{grid-template-columns:1fr}
       .carousel{padding:8px}
@@ -118,7 +118,7 @@ function router(){
   content.appendChild(fn());
 }
 
-/* --- HOME --- */
+
 function renderHome(){
   const wrapper = document.createElement('div');
   wrapper.className='frame';
@@ -180,7 +180,7 @@ function renderHome(){
   return wrapper;
 }
 
-/* --- REVIEWS --- */
+
 function renderReviews(){
   const wrap=document.createElement('div');wrap.className='frame';
   const panel=document.createElement('div');panel.className='content-panel';
@@ -242,7 +242,7 @@ function addReview(r){
   container.prepend(card);
 }
 
-/* --- CONTACTS --- */
+
 function renderContacts(){
   const wrap=document.createElement('div');wrap.className='frame';
   const panel=document.createElement('div');panel.className='content-panel';
@@ -251,7 +251,7 @@ function renderContacts(){
   return wrap;
 }
 
-/* --- ADMIN CRUD (localStorage) --- */
+
 function renderAdmin(){
   const wrap=document.createElement('div');wrap.className='frame';
   const panel=document.createElement('div');panel.className='content-panel';
@@ -290,3 +290,4 @@ window.addEventListener('load',router);
 </script>
 </body>
 </html>
+
